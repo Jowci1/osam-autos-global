@@ -21,12 +21,11 @@ export default function Home() {
   const [view, setView] = useState("home");
   const whatsappNumber = "2348020527864"; 
 
-  // This handles the Case Sensitivity issue by checking BOTH .jpeg and .JPEG
+  // PINNED: Logic to detect both .jpeg and .JPEG extensions
   const getCarImages = (id: string) => {
     const angles = ['front', 'back', 'left', 'right', 'dashboard', 'interior-1', 'interior-2'];
     let paths: string[] = [];
     angles.forEach(angle => {
-      // It adds both versions to the search list
       paths.push(`/cars/${id}-${angle}.jpeg`);
       paths.push(`/cars/${id}-${angle}.JPEG`);
     });
@@ -34,47 +33,50 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#020202] text-white">
+    // PINNED: Adaptive background - White by default, Black on Dark Mode
+    <main className="min-h-screen bg-white dark:bg-[#020202] text-black dark:text-white transition-colors duration-500">
       
-      {/* NAV */}
-      <nav className="fixed top-0 z-50 w-full backdrop-blur-3xl bg-black/60 border-b border-white/5 p-6">
+      {/* PINNED: Seamless Glass Nav */}
+      <nav className="fixed top-0 z-50 w-full backdrop-blur-3xl bg-white/70 dark:bg-black/60 border-b border-black/5 dark:border-white/5 p-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4 cursor-pointer" onClick={() => setView("home")}>
-            <img src="/logo.png" alt="Logo" className="h-7 w-auto" />
+          <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView("home")}>
+            {/* PINNED: Logo visibility locked */}
+            <img src="/logo.png" alt="Logo" className="h-7 w-auto dark:brightness-150 transition-transform group-hover:scale-105" />
             <span className="font-bold tracking-[0.5em] text-[9px] uppercase">OSAM AUTOS GLOBAL</span>
           </div>
           <div className="flex gap-8 text-[9px] font-black uppercase tracking-widest">
-             <button onClick={() => setView("inventory")} className={view === "inventory" ? "text-blue-500" : "opacity-40"}>Inventory</button>
-             <button onClick={() => setView("home")} className={view === "home" ? "text-blue-500" : "opacity-40"}>Services</button>
+             <button onClick={() => setView("inventory")} className={view === "inventory" ? "text-blue-600 dark:text-blue-400" : "opacity-40 hover:opacity-100 transition"}>Inventory</button>
+             <button onClick={() => setView("home")} className={view === "home" ? "text-blue-600 dark:text-blue-400" : "opacity-40 hover:opacity-100 transition"}>Services</button>
           </div>
         </div>
       </nav>
 
       {view === "home" ? (
-        /* --- TILES --- */
+        /* --- PINNED: Hero Tiles --- */
         <section className="pt-40 px-6 max-w-7xl mx-auto flex flex-col justify-center min-h-[90vh]">
           <div className="grid md:grid-cols-3 gap-8">
-            <div onClick={() => setView("inventory")} className="group p-12 rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-3xl hover:bg-white/[0.07] transition-all cursor-pointer">
+            <div onClick={() => setView("inventory")} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-black/[0.05] dark:hover:bg-white/[0.07] transition-all cursor-pointer">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Inventory</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Premium Car Sales</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Premium Car Sales</p>
             </div>
-            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-3xl hover:bg-blue-600/20 transition-all">
+            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-blue-600/10 dark:hover:bg-blue-600/20 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Repair Hub</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Diagnostics & Care</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Professional Diagnostics</p>
             </a>
-            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-white/10 bg-white/[0.02] backdrop-blur-3xl hover:bg-zinc-800 transition-all">
+            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Global Parts</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Spare Sourcing</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Genuine Spare Sourcing</p>
             </a>
           </div>
         </section>
       ) : (
-        /* --- INVENTORY --- */
-        <section className="pt-40 pb-24 px-6 max-w-7xl mx-auto">
+        /* --- PINNED: Inventory View --- */
+        <section className="pt-40 pb-24 px-6 max-w-7xl mx-auto animate-in fade-in duration-1000">
           <div className="grid md:grid-cols-2 gap-20">
             {CAR_DATA.map((car) => (
               <div key={car.id} className="group">
-                <div className="relative aspect-[16/10] bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-white/5 shadow-2xl">
+                {/* PINNED: Swipe Gallery */}
+                <div className="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl transition-all">
                   <div className="flex overflow-x-auto snap-x h-full scrollbar-hide">
                     {getCarImages(car.id).map((img, i) => (
                       <div key={i} className="w-full h-full flex-shrink-0 snap-center relative">
@@ -89,12 +91,13 @@ export default function Home() {
                   </div>
                   <div className="absolute inset-0 pointer-events-none flex flex-col justify-end p-10">
                      <div className="flex justify-center">
-                        <div className="bg-black/50 backdrop-blur-2xl px-6 py-3 rounded-full text-[7px] font-black uppercase tracking-[0.5em] border border-white/10">
+                        <div className="bg-white/60 dark:bg-black/50 backdrop-blur-2xl px-6 py-3 rounded-full text-[7px] font-black uppercase tracking-[0.5em] border border-black/10 dark:border-white/10">
                           Slide to Inspect
                         </div>
                      </div>
                   </div>
                 </div>
+
                 <div className="px-6">
                   <div className="flex justify-between items-baseline mb-4">
                     <h3 className="text-4xl font-light tracking-tight">{car.name}</h3>
@@ -102,9 +105,9 @@ export default function Home() {
                   </div>
                   <p className="text-[10px] opacity-40 uppercase tracking-[0.4em] font-black mb-12">{car.details}</p>
                   <a 
-                    href={`https://wa.me/${whatsappNumber}?text=Inquiry: ${car.name}`}
+                    href={`https://wa.me/${whatsappNumber}?text=Inquiry: ${car.name} (#${car.id})`}
                     target="_blank"
-                    className="inline-block px-14 py-6 text-[9px] font-black uppercase tracking-[0.6em] bg-white text-black rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-2xl active:scale-95"
+                    className="inline-block px-14 py-6 text-[9px] font-black uppercase tracking-[0.6em] bg-black text-white dark:bg-white dark:text-black rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-2xl active:scale-95"
                   >
                     Request Pricing
                   </a>
