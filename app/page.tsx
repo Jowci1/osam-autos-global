@@ -26,10 +26,13 @@ export default function Home() {
     const angles = ['front', 'back', 'left', 'right', 'dashboard', 'interior-1', 'interior-2'];
     let paths: string[] = [];
     angles.forEach(angle => {
-      // Trying every variation for ID 4 specifically
       paths.push(`/cars/${id}-${angle}.jpeg`);
       paths.push(`/cars/${id}-${angle}.JPEG`);
-      paths.push(`/cars/${id}-${angle}.jpg`);
+      // EXTRA SAFETY: In case the file is named "rx350" instead of "4"
+      if(id === "4") {
+        paths.push(`/cars/rx350-${angle}.jpeg`);
+        paths.push(`/cars/rx350-${angle}.JPEG`);
+      }
     });
     return paths;
   };
@@ -37,7 +40,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white dark:bg-[#020202] text-black dark:text-white transition-colors duration-500">
       
-      {/* NAV */}
       <nav className="fixed top-0 z-50 w-full backdrop-blur-3xl bg-white/70 dark:bg-black/60 border-b border-black/5 dark:border-white/5 p-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView("home")}>
@@ -81,13 +83,15 @@ export default function Home() {
                     src={`/cars/${car.id}-front.jpeg`} 
                     className="w-full h-full object-cover" 
                     alt={car.name}
-                    // REINFORCED: Specific fallback for RX 350
                     onError={(e) => { 
                         const img = e.currentTarget;
+                        // Try every extension and then try the 'rx350' name fallback
                         if (img.src.includes('.jpeg')) {
                             img.src = `/cars/${car.id}-front.JPEG`;
                         } else if (img.src.includes('.JPEG')) {
                             img.src = `/cars/${car.id}-front.jpg`;
+                        } else if (car.id === "4" && !img.src.includes('rx350')) {
+                            img.src = `/cars/rx350-front.jpeg`;
                         }
                     }}
                   />
@@ -118,11 +122,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* FULL-SCREEN POP-OUT */}
       {selectedCar && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-3xl" onClick={() => setSelectedCar(null)} />
-          
           <div className="relative w-full h-full md:h-[90vh] md:max-w-7xl md:rounded-[3rem] overflow-hidden shadow-2xl">
             <button 
               onClick={() => setSelectedCar(null)}
