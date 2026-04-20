@@ -21,7 +21,6 @@ export default function Home() {
   const [view, setView] = useState("home");
   const whatsappNumber = "2348020527864"; 
 
-  // PINNED: Logic to detect both .jpeg and .JPEG extensions
   const getCarImages = (id: string) => {
     const angles = ['front', 'back', 'left', 'right', 'dashboard', 'interior-1', 'interior-2'];
     let paths: string[] = [];
@@ -33,14 +32,11 @@ export default function Home() {
   };
 
   return (
-    // PINNED: Adaptive background - White by default, Black on Dark Mode
     <main className="min-h-screen bg-white dark:bg-[#020202] text-black dark:text-white transition-colors duration-500">
       
-      {/* PINNED: Seamless Glass Nav */}
       <nav className="fixed top-0 z-50 w-full backdrop-blur-3xl bg-white/70 dark:bg-black/60 border-b border-black/5 dark:border-white/5 p-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView("home")}>
-            {/* PINNED: Logo visibility locked */}
             <img src="/logo.png" alt="Logo" className="h-7 w-auto dark:brightness-150 transition-transform group-hover:scale-105" />
             <span className="font-bold tracking-[0.5em] text-[9px] uppercase">OSAM AUTOS GLOBAL</span>
           </div>
@@ -52,30 +48,27 @@ export default function Home() {
       </nav>
 
       {view === "home" ? (
-        /* --- PINNED: Hero Tiles --- */
         <section className="pt-40 px-6 max-w-7xl mx-auto flex flex-col justify-center min-h-[90vh]">
           <div className="grid md:grid-cols-3 gap-8">
             <div onClick={() => setView("inventory")} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-black/[0.05] dark:hover:bg-white/[0.07] transition-all cursor-pointer">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Inventory</h2>
               <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Premium Car Sales</p>
             </div>
-            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-blue-600/10 dark:hover:bg-blue-600/20 transition-all">
+            <a href={`https://wa.me/${whatsappNumber}?text=Hello Osam Autos, I'm interested in booking a professional diagnostic session.`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-blue-600/10 dark:hover:bg-blue-600/20 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Repair Hub</h2>
               <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Professional Diagnostics</p>
             </a>
-            <a href={`https://wa.me/${whatsappNumber}`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all">
+            <a href={`https://wa.me/${whatsappNumber}?text=Hello Osam Autos, I'm looking for a specific genuine spare part.`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Global Parts</h2>
               <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100 transition-opacity">Genuine Spare Sourcing</p>
             </a>
           </div>
         </section>
       ) : (
-        /* --- PINNED: Inventory View --- */
         <section className="pt-40 pb-24 px-6 max-w-7xl mx-auto animate-in fade-in duration-1000">
           <div className="grid md:grid-cols-2 gap-20">
             {CAR_DATA.map((car) => (
               <div key={car.id} className="group">
-                {/* PINNED: Swipe Gallery */}
                 <div className="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl transition-all">
                   <div className="flex overflow-x-auto snap-x h-full scrollbar-hide">
                     {getCarImages(car.id).map((img, i) => (
@@ -105,7 +98,7 @@ export default function Home() {
                   </div>
                   <p className="text-[10px] opacity-40 uppercase tracking-[0.4em] font-black mb-12">{car.details}</p>
                   <a 
-                    href={`https://wa.me/${whatsappNumber}?text=Inquiry: ${car.name} (#${car.id})`}
+                    href={`https://wa.me/${whatsappNumber}?text=Hello Osam Autos, I am highly interested in purchasing the ${car.name} (Unit ID: #${car.id}). Could you please provide the current pricing and availability?`}
                     target="_blank"
                     className="inline-block px-14 py-6 text-[9px] font-black uppercase tracking-[0.6em] bg-black text-white dark:bg-white dark:text-black rounded-full hover:bg-blue-600 hover:text-white transition-all shadow-2xl active:scale-95"
                   >
