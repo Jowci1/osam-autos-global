@@ -19,7 +19,7 @@ const CAR_DATA = [
 
 export default function Home() {
   const [view, setView] = useState("home");
-  const [selectedCar, setSelectedCar] = useState<any>(null); // State for the pop-out modal
+  const [selectedCar, setSelectedCar] = useState<any>(null);
   const whatsappNumber = "2348020527864"; 
 
   const getCarImages = (id: string) => {
@@ -43,8 +43,8 @@ export default function Home() {
             <span className="font-bold tracking-[0.5em] text-[9px] uppercase">OSAM AUTOS GLOBAL</span>
           </div>
           <div className="flex gap-8 text-[9px] font-black uppercase tracking-widest">
-             <button onClick={() => { setView("inventory"); setSelectedCar(null); }} className={view === "inventory" ? "text-blue-600 dark:text-blue-400" : "opacity-40 hover:opacity-100 transition"}>Inventory</button>
-             <button onClick={() => { setView("home"); setSelectedCar(null); }} className={view === "home" ? "text-blue-600 dark:text-blue-400" : "opacity-40 hover:opacity-100 transition"}>Services</button>
+             <button onClick={() => { setView("inventory"); setSelectedCar(null); }} className={view === "inventory" ? "text-blue-600 dark:text-blue-400" : "opacity-40"}>Inventory</button>
+             <button onClick={() => { setView("home"); setSelectedCar(null); }} className={view === "home" ? "text-blue-600 dark:text-blue-400" : "opacity-40"}>Services</button>
           </div>
         </div>
       </nav>
@@ -54,15 +54,15 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             <div onClick={() => setView("inventory")} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-black/[0.05] dark:hover:bg-white/[0.07] transition-all cursor-pointer">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Inventory</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Premium Car Sales</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Premium Car Sales</p>
             </div>
             <a href={`https://wa.me/${whatsappNumber}?text=Hello Osam Autos, I'm interested in booking a professional diagnostic session.`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-blue-600/10 dark:hover:bg-blue-600/20 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Repair Hub</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Professional Diagnostics</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Professional Diagnostics</p>
             </a>
             <a href={`https://wa.me/${whatsappNumber}?text=Hello Osam Autos, I'm looking for a specific genuine spare part.`} className="group p-12 rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all">
               <h2 className="text-4xl font-light mb-4 tracking-tighter">Global Parts</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30 group-hover:opacity-100">Genuine Spare Sourcing</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Genuine Spare Sourcing</p>
             </a>
           </div>
         </section>
@@ -73,7 +73,7 @@ export default function Home() {
               <div key={car.id} className="group">
                 <div 
                   onClick={() => setSelectedCar(car)}
-                  className="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl cursor-zoom-in transition-transform hover:scale-[1.02]"
+                  className="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl cursor-zoom-in transition-transform hover:scale-[1.01]"
                 >
                   <img 
                     src={`/cars/${car.id}-front.jpeg`} 
@@ -81,9 +81,6 @@ export default function Home() {
                     alt={car.name}
                     onError={(e) => { e.currentTarget.src = `/cars/${car.id}-front.JPEG`; }}
                   />
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="bg-white/20 backdrop-blur-md px-6 py-2 rounded-full text-[8px] uppercase tracking-widest font-bold">Tap to Inspect Full Detail</span>
-                  </div>
                 </div>
 
                 <div className="px-6">
@@ -106,25 +103,26 @@ export default function Home() {
         </section>
       )}
 
-      {/* GLASSMORPHIC POP-OUT MODAL */}
+      {/* FULL-SCREEN GLASS MODAL */}
       {selectedCar && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 animate-in fade-in zoom-in duration-300">
-          <div className="absolute inset-0 bg-white/20 dark:bg-black/60 backdrop-blur-2xl" onClick={() => setSelectedCar(null)} />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-300">
+          <div className="absolute inset-0 bg-white/90 dark:bg-black/95 backdrop-blur-2xl" onClick={() => setSelectedCar(null)} />
           
-          <div className="relative w-full max-w-6xl aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
+          <div className="relative w-full h-full md:h-[90vh] md:max-w-7xl md:rounded-[3rem] overflow-hidden shadow-2xl">
             <button 
               onClick={() => setSelectedCar(null)}
-              className="absolute top-6 right-8 z-[110] text-3xl font-light opacity-50 hover:opacity-100 transition"
+              className="absolute top-8 right-8 z-[110] w-12 h-12 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-md text-2xl"
             >
               ×
             </button>
 
-            <div className="flex overflow-x-auto snap-x h-full scrollbar-hide">
+            {/* SEAMLESS SLIDING: removed padding/gaps */}
+            <div className="flex overflow-x-auto snap-x snap-mandatory h-full scrollbar-hide">
               {getCarImages(selectedCar.id).map((img, i) => (
                 <div key={i} className="w-full h-full flex-shrink-0 snap-center relative">
                   <img 
                     src={img} 
-                    className="w-full h-full object-contain bg-black/5" 
+                    className="w-full h-full object-contain" 
                     alt="" 
                     onError={(e) => { e.currentTarget.parentElement?.remove(); }}
                   />
@@ -132,9 +130,10 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none">
-              <div className="bg-black/40 dark:bg-white/10 backdrop-blur-xl px-8 py-3 rounded-full text-[8px] font-black uppercase tracking-[0.5em] border border-white/10 text-white">
-                Slide to Inspect Full Angles
+            {/* MOBILE-OPTIMIZED TEXT */}
+            <div className="absolute bottom-10 left-0 w-full flex justify-center pointer-events-none px-6">
+              <div className="bg-black/10 dark:bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-[0.5em] border border-white/10 text-black dark:text-white">
+                Swipe for details
               </div>
             </div>
           </div>
