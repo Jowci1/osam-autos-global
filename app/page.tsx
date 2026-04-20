@@ -26,8 +26,10 @@ export default function Home() {
     const angles = ['front', 'back', 'left', 'right', 'dashboard', 'interior-1', 'interior-2'];
     let paths: string[] = [];
     angles.forEach(angle => {
+      // Trying every variation for ID 4 specifically
       paths.push(`/cars/${id}-${angle}.jpeg`);
       paths.push(`/cars/${id}-${angle}.JPEG`);
+      paths.push(`/cars/${id}-${angle}.jpg`);
     });
     return paths;
   };
@@ -79,15 +81,16 @@ export default function Home() {
                     src={`/cars/${car.id}-front.jpeg`} 
                     className="w-full h-full object-cover" 
                     alt={car.name}
-                    // FIXED: RX 350 Fallback check
+                    // REINFORCED: Specific fallback for RX 350
                     onError={(e) => { 
                         const img = e.currentTarget;
                         if (img.src.includes('.jpeg')) {
                             img.src = `/cars/${car.id}-front.JPEG`;
+                        } else if (img.src.includes('.JPEG')) {
+                            img.src = `/cars/${car.id}-front.jpg`;
                         }
                     }}
                   />
-                  {/* BRIGHTER GLASS HINT */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="bg-white/80 dark:bg-white/20 backdrop-blur-2xl px-6 py-2 rounded-full text-[9px] uppercase tracking-[0.2em] font-black border border-white/40 shadow-xl text-black dark:text-white">
                        Click to inspect
