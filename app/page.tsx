@@ -81,6 +81,12 @@ export default function Home() {
                     alt={car.name}
                     onError={(e) => { e.currentTarget.src = `/cars/${car.id}-front.JPEG`; }}
                   />
+                  {/* BACKGROUND HINT: click image to inspect */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="bg-black/20 dark:bg-white/10 backdrop-blur-xl px-6 py-2 rounded-full text-[8px] uppercase tracking-[0.3em] font-bold border border-white/10">
+                       Click to inspect
+                    </div>
+                  </div>
                 </div>
 
                 <div className="px-6">
@@ -103,7 +109,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* FULL-SCREEN GLASS MODAL */}
+      {/* FULL-SCREEN POP-OUT */}
       {selectedCar && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-white/90 dark:bg-black/95 backdrop-blur-2xl" onClick={() => setSelectedCar(null)} />
@@ -116,7 +122,6 @@ export default function Home() {
               ×
             </button>
 
-            {/* SEAMLESS SLIDING: removed padding/gaps */}
             <div className="flex overflow-x-auto snap-x snap-mandatory h-full scrollbar-hide">
               {getCarImages(selectedCar.id).map((img, i) => (
                 <div key={i} className="w-full h-full flex-shrink-0 snap-center relative">
@@ -130,7 +135,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* MOBILE-OPTIMIZED TEXT */}
+            {/* POP-OUT HINT: swipe for details */}
             <div className="absolute bottom-10 left-0 w-full flex justify-center pointer-events-none px-6">
               <div className="bg-black/10 dark:bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-[0.5em] border border-white/10 text-black dark:text-white">
                 Swipe for details
