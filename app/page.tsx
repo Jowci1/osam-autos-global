@@ -5,7 +5,7 @@ const CAR_DATA = [
   { id: "1", name: "Toyota Avalon", details: "2013–2015 • V6 3.5L • Midnight Black" },
   { id: "2", name: "Mercedes-Benz GLC 300", details: "2016–2019 • Luxury SUV • X253" },
   { id: "3", name: "Toyota Camry", details: "2018–2020 • LE/XLE • Midnight Black" },
-  { id: "4", name: "Lexus RX 350", details: "2016–2022 • 3.5L V6 • Luxury SUV" },
+  // Lexus RX 350 Removed
   { id: "5", name: "Chevrolet Spark", details: "2013–2015 • 1.2L 4-Cylinder • Victory Red" },
   { id: "6", name: "Toyota Camry SE/XSE", details: "2021–2024 • Two-Tone White/Black Roof" },
   { id: "7", name: "Mercedes-Benz GLA 250", details: "2014–2017 • 4MATIC • Mountain Grey" },
@@ -28,11 +28,6 @@ export default function Home() {
     angles.forEach(angle => {
       paths.push(`/cars/${id}-${angle}.jpeg`);
       paths.push(`/cars/${id}-${angle}.JPEG`);
-      // EXTRA SAFETY: In case the file is named "rx350" instead of "4"
-      if(id === "4") {
-        paths.push(`/cars/rx350-${angle}.jpeg`);
-        paths.push(`/cars/rx350-${angle}.JPEG`);
-      }
     });
     return paths;
   };
@@ -85,13 +80,8 @@ export default function Home() {
                     alt={car.name}
                     onError={(e) => { 
                         const img = e.currentTarget;
-                        // Try every extension and then try the 'rx350' name fallback
                         if (img.src.includes('.jpeg')) {
                             img.src = `/cars/${car.id}-front.JPEG`;
-                        } else if (img.src.includes('.JPEG')) {
-                            img.src = `/cars/${car.id}-front.jpg`;
-                        } else if (car.id === "4" && !img.src.includes('rx350')) {
-                            img.src = `/cars/rx350-front.jpeg`;
                         }
                     }}
                   />
@@ -125,6 +115,7 @@ export default function Home() {
       {selectedCar && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-3xl" onClick={() => setSelectedCar(null)} />
+          
           <div className="relative w-full h-full md:h-[90vh] md:max-w-7xl md:rounded-[3rem] overflow-hidden shadow-2xl">
             <button 
               onClick={() => setSelectedCar(null)}
