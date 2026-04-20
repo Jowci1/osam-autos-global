@@ -19,7 +19,7 @@ const CAR_DATA = [
 
 export default function Home() {
   const [view, setView] = useState("home");
-  const whatsappNumber = "234XXXXXXXXXX"; // <--- CHANGE TO YOUR NUMBER
+  const whatsappNumber = "2348020527864"; // <--- CHANGE TO YOUR NUMBER
 
   // We list every possible photo name you might have used
   const getCarImages = (id: string) => [
