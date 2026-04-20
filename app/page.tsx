@@ -73,17 +73,23 @@ export default function Home() {
               <div key={car.id} className="group">
                 <div 
                   onClick={() => setSelectedCar(car)}
-                  className="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900/40 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl cursor-zoom-in transition-transform hover:scale-[1.01]"
+                  className="relative aspect-[16/10] bg-zinc-200 dark:bg-zinc-800 rounded-[3.5rem] overflow-hidden mb-10 border border-black/5 dark:border-white/5 shadow-2xl cursor-zoom-in transition-transform hover:scale-[1.01]"
                 >
                   <img 
                     src={`/cars/${car.id}-front.jpeg`} 
                     className="w-full h-full object-cover" 
                     alt={car.name}
-                    onError={(e) => { e.currentTarget.src = `/cars/${car.id}-front.JPEG`; }}
+                    // FIXED: RX 350 Fallback check
+                    onError={(e) => { 
+                        const img = e.currentTarget;
+                        if (img.src.includes('.jpeg')) {
+                            img.src = `/cars/${car.id}-front.JPEG`;
+                        }
+                    }}
                   />
-                  {/* BACKGROUND HINT: click image to inspect */}
+                  {/* BRIGHTER GLASS HINT */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="bg-black/20 dark:bg-white/10 backdrop-blur-xl px-6 py-2 rounded-full text-[8px] uppercase tracking-[0.3em] font-bold border border-white/10">
+                    <div className="bg-white/80 dark:bg-white/20 backdrop-blur-2xl px-6 py-2 rounded-full text-[9px] uppercase tracking-[0.2em] font-black border border-white/40 shadow-xl text-black dark:text-white">
                        Click to inspect
                     </div>
                   </div>
@@ -112,12 +118,12 @@ export default function Home() {
       {/* FULL-SCREEN POP-OUT */}
       {selectedCar && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-300">
-          <div className="absolute inset-0 bg-white/90 dark:bg-black/95 backdrop-blur-2xl" onClick={() => setSelectedCar(null)} />
+          <div className="absolute inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-3xl" onClick={() => setSelectedCar(null)} />
           
           <div className="relative w-full h-full md:h-[90vh] md:max-w-7xl md:rounded-[3rem] overflow-hidden shadow-2xl">
             <button 
               onClick={() => setSelectedCar(null)}
-              className="absolute top-8 right-8 z-[110] w-12 h-12 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-md text-2xl"
+              className="absolute top-8 right-8 z-[110] w-12 h-12 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-md text-2xl font-light"
             >
               ×
             </button>
@@ -135,9 +141,8 @@ export default function Home() {
               ))}
             </div>
 
-            {/* POP-OUT HINT: swipe for details */}
             <div className="absolute bottom-10 left-0 w-full flex justify-center pointer-events-none px-6">
-              <div className="bg-black/10 dark:bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-[0.5em] border border-white/10 text-black dark:text-white">
+              <div className="bg-black/5 dark:bg-white/10 backdrop-blur-2xl px-6 py-3 rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-[0.5em] border border-black/5 dark:border-white/10 text-black dark:text-white shadow-lg">
                 Swipe for details
               </div>
             </div>
